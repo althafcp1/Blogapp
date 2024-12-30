@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Form with Validation and Username Check</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .signup-form {
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .signup-form h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .form-group button:hover {
+            background: #0056b3;
+        }
+        .error, .success {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <form class="signup-form" id="signupForm" method="POST" action="{% url 'signup' %}">
+        <h2>Sing Up</h2>
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        <div class="form-group">
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" >
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" >
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Choose a username" >
+            <div id="usernameStatus"></div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Create a password" >
+        </div>
+        <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" >
+        </div>
+        <div class="form-group">
+            <button type="submit">Sign Up</button>
+        </div>
+        <span>Already have an account ?</span> <a href="{% url 'signin' %}">Signin</a>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            // Username availability check
+            $('#username').on('blur', function () {
+                const username = $(this).val().trim();
+                if (username.length < 3) {
+                    $('#usernameStatus').html('<span class="error">Username must be at least 3 characters.</span>');
+                    return;
+                }
+                $('#usernameStatus').html(''); // Clear existing message
+
+                $.ajax({
+                    url: '/check-username/',
+                    type: 'POST',
+                    data: {
+                        username: username,
+                        csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                    },
+                    success: function (response) {
+                        if (response.available) {
+                            $('#usernameStatus').html('<span class="success">Username is available!</span>');
+                        } else {
+                            $('#usernameStatus').html('<span class="error">Username is already taken.</span>');
+                        }
+                    },
+                    error: function () {
+                        $('#usernameStatus').html('<span class="error">Error checking username availability.</span>');
+                    }
+                });
+            });
+
+            // Form validation
+            $('#signupForm').on('submit', function (e) {
+                e.preventDefault();
+
+                // Clear existing error messages
+                $('.error').remove();
+
+                const fullname = $('#fullname').val().trim();
+                const email = $('#email').val().trim();
+                const username = $('#username').val().trim();
+                const password = $('#password').val();
+                const confirmPassword = $('#confirm-password').val();
+
+                let isValid = true;
+
+                if (fullname === '') {
+                    $('#fullname').after('<span class="error">Full name is required.</span>');
+                    isValid = false;
+                }
+
+                if (email === '') {
+                    $('#email').after('<span class="error">Email is required.</span>');
+                    isValid = false;
+                } else if (!/\S+@\S+\.\S+/.test(email)) {
+                    $('#email').after('<span class="error">Invalid email format.</span>');
+                    isValid = false;
+                }
+
+                if (username === '') {
+                    $('#username').after('<span class="error">Username is required.</span>');
+                    isValid = false;
+                }
+
+                if (password === '') {
+                    $('#password').after('<span class="error">Password is required..</span>');
+                    isValid = false;
+                } else if (password.length < 6) {
+                    $('#password').after('<span class="error">Password must be at least 6 characters long.</span>');
+                    isValid = false;
+                }
+
+                if (confirmPassword === '') {
+                    $('#confirm-password').after('<span class="error">Please confirm your password.</span>');
+                    isValid = false;
+                } else if (password !== confirmPassword) {
+                    $('#confirm-password').after('<span class="error">Passwords do not match.</span>');
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    alert('Form submitted successfully!');
+                    // Optionally, submit the form data to the backend
+                    this.submit();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

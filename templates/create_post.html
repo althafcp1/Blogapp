@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    form{
+        margin-top: 100px;
+    }
+</style>
+
+
+<form method="POST" action="{% url 'create_post' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="image">Image</label>
+    <input type="file" id="image" name="image" >
+
+    <label for="caption">Caption</label>
+    <input type="text" id="caption" name="caption">
+
+    <label for="description">Description</label>
+    <input type="text" id="description" name="description">
+
+    <button type="submit">Submit</button>
+</form>
+
+
+
+{% endblock %}

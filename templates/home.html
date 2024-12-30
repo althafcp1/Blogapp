@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - BlogNest</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<style>
+    /* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #222; /* Darker navbar for a sleek look */
+    padding: 15px 30px; /* More space for a clean look */
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adds shadow for depth */
+    transition: background-color 0.3s ease; /* Smooth transition for background change */
+}
+
+.navbar:hover {
+    background-color: #111; /* Slight hover effect to darken navbar */
+}
+
+.navbar .logo {
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 1px; /* Slight space between letters for a modern look */
+    color: #fff;
+    
+    transition: transform 0.3s ease;
+}
+
+.navbar .logo:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover for the logo */
+}
+
+.navbar .nav-links a {
+    margin-left: 25px;
+    color: #f1f1f1; /* Slightly softer white for links */
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+}
+
+.navbar .nav-links a:hover {
+    color: #007bff; /* Change color to blue on hover */
+    text-decoration: underline;
+}
+
+/* Search Box */
+.navbar .search-box {
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-color: transparent;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.navbar .search-box input {
+    padding: 8px 15px;
+    border-radius: 30px;
+    border: none;
+    width: 220px;
+    outline: none;
+    background-color: #fff;
+    color: #333;
+    font-size: 16px;
+    transition: width 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .search-box input:focus {
+    width: 250px; /* Expand input width on focus */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Add blue shadow when focused */
+}
+
+.navbar .search-box .search-icon {
+    background: transparent;
+    border: none;
+    color: #555;
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar .search-box .search-icon:hover {
+    color: #007bff; /* Change icon color on hover */
+    transform: scale(1.2); /* Slight zoom effect on hover */
+}
+
+.navbar .search-box .search-icon:focus {
+    outline: none;
+}
+
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    background: black;
+    color: white;
+    padding: 60px 20px;
+}
+
+.hero h1 {
+    font-size: 36px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.hero .cta-button {
+    background-color: #fff;
+    color: black;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.hero .cta-button:hover {
+    background-color: #fff;
+    color: gray;
+}
+
+/* Featured Blogs */
+.featured-blogs {
+    padding: 40px 20px;
+}
+
+.featured-blogs h2 {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.featured-blogs .blog-posts {
+    display: flex;
+    gap: 20px;
+    justify-content: space-around;
+}
+
+.featured-blogs .blog-post {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 30%;
+}
+
+.featured-blogs .blog-post img {
+    width: 100%;
+    height: auto;
+}
+
+.featured-blogs .blog-post h3 {
+    font-size: 18px;
+    padding: 15px;
+}
+
+.featured-blogs .blog-post p {
+    padding: 0 15px;
+    font-size: 14px;
+}
+
+.featured-blogs .blog-post a {
+    display: block;
+    padding: 10px 15px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    
+}
+
+.featured-blogs .blog-post a:hover {
+    background-color: gray;
+}
+
+/* Trending Topics */
+.trending-topics {
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+}
+
+.trending-topics h2 {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.trending-topics .topics {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.trending-topics .topics a {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.trending-topics .topics a:hover {
+    background-color: gray;
+}
+
+/* Testimonials */
+.testimonials {
+    padding: 40px 20px;
+    background-color: #f0f2f5;
+}
+
+.testimonials h2 {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.testimonials .testimonial {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Blog Categories Section */
+.blog-categories {
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+}
+
+.blog-categories h2 {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.blog-categories .categories {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.blog-categories .category {
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    transform: scale(0.9); /* Initially, scale it down */
+}
+
+.blog-categories .category:hover {
+    background-color: gray;
+    transform: scale(1.1); /* Scale it up when hovered */
+}
+
+.blog-categories .category:focus,
+.blog-categories .category:active {
+    outline: none;
+    background-color: gray;
+}
+
+
+
+
+.cta {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: black;
+    color: white;
+    position: relative; 
+}
+
+.cta h2 {
+    font-size: 36px;
+    margin-bottom: 20px; 
+}
+
+.cta p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.cta .cta-button {
+    background-color: #fff;
+    color: black;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 5px; 
+}
+
+.cta .cta-button:hover {
+    background-color: #fff;
+    color: gray;
+}
+
+
+/* Footer */
+footer {
+    background-color: black;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+footer .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+footer .social-links a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+footer .social-links a:hover {
+    color: gray;
+}
+
+</style>
+<body>
+
+    <!-- Navbar Section -->
+    <div class="navbar">
+        <div class="logo">BloNest</div>
+        <div class="search-box">
+            <form action="{% url 'search_user' %}" method="get">
+                <div class="input-container">
+                    <input type="text" name="query" placeholder="Search..." class="search-input" required>
+                    <button type="submit" class="search-icon">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Friends</a>
+            <a href="#">Messages</a>
+            <a href="{% url 'profile_redirect' %}">Profile</a>
+            <a href="{% url 'signout' %}">Signout</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Welcome to BlogNest</h1>
+        <p>Your place for insightful blogs and discussions!</p>
+        <!-- <button class="cta-button">Start Reading</button> -->
+    </div>
+
+    <!-- Featured Blog Section -->
+<section class="featured-blogs">
+    <h2>Explore Our Latest Insights</h2>
+    <div class="blog-posts">
+        <div class="blog-post">
+            <img src="https://miro.medium.com/v2/resize:fit:1400/1*iKSxHohNWmcDPi6Jk050lg.jpeg" alt="Post Image">
+            <h3>Mastering Time Management: Tips and Tricks for Busy Professionals</h3>
+            <p>Time management is essential for professionals looking to boost productivity. Here are some key strategies you can adopt today.</p><br><br><br>
+            <a href="https://www.lucidchart.com/blog/time-management-at-work">Read More</a>
+        </div>
+        <div class="blog-post">
+            <img src="https://cdn.prod.website-files.com/652bf3e3f9121f403b345335/66e7d47fdf1ff473d6f2884c_future-of-remote-work-trends-2025-beyond.jpg" alt="Post Image">
+            <h3>The Future of Remote Work: Trends to Watch in 2025</h3>
+            <p>As remote work continues to grow, understanding future trends will help you stay ahead. Here's a glimpse into what's to come in 2025.</p> <br><br><br>
+            <a href="https://www.forbes.com/sites/rachelwells/2024/09/23/3-remote-job-trends-to-watch-in-2025/">Read More</a>
+        </div>
+        <div class="blog-post">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT89etFye2O3VK0stzF7l_jgCFgkLceV1Wpgw&s" alt="Post Image">
+            <h3>How to Build a Productive Morning Routine</h3>
+            <p>Your morning sets the tone for the entire day. Learn how to craft a routine that helps you get the most out of each day.</p><br><br><br>
+            <a href="https://asana.com/resources/best-morning-routine">Read More</a>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Categories Section -->
+<section class="blog-categories">
+    <h2>Blog Categories</h2>
+    <div class="categories">
+        <a href="https://www.skillsyouneed.com/ps/personal-development.html" class="category">Personal Development</a>
+        <a href="https://www.simplilearn.com/top-technology-trends-and-jobs-article" class="category">Tech Innovations</a>
+        <a href="https://www.medicinenet.com/what_is_health_and_wellness/article.htm" class="category">Health & Wellness</a>
+        <a href="https://www.nomadia-group.com/en/resources/blog/types-of-business-strategies-benefits-and-examples/" class="category">Business Strategies</a>
+    </div>
+</section>
+
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <h2>What Our Users Say</h2>
+        
+        <div class="testimonial">
+            <p>"BlogNest helped me find amazing articles and connect with like-minded people!" - Sarun kumar``</p>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta">
+        <h2>Join Us Today!</h2>
+        <p>Start exploring blogs and share your thoughts with the community.</p>
+        <a href="{% url 'signup' %}" class="cta-button">Sign Up Now</a>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 BlogNest. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

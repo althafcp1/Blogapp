@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    form {
+        margin: 100px auto;
+        width: 50%;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        color: #333;
+    }
+
+    input[type="text"], 
+    input[type="date"], 
+    input[type="file"], 
+    select {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+    }
+
+    button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    form * {
+        box-sizing: border-box;
+    }
+</style>
+
+<h2>Create Profile</h2>
+
+<form method="POST" action="{% url 'createProfile' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!-- Date of Birth -->
+    <label for="dob">DOB</label>
+    <input type="date" id="dob" name="dob" value="{{ request.POST.dob }}">
+
+    <!-- Gender -->
+    <label for="gender">Gender</label>
+    <select name="gender" id="gender">
+        <option value="male" {% if request.POST.gender == "male" %}selected{% endif %}>Male</option>
+        <option value="female" {% if request.POST.gender == "female" %}selected{% endif %}>Female</option>
+        <option value="other" {% if request.POST.gender == "other" %}selected{% endif %}>Other</option>
+    </select>
+
+    <!-- About -->
+    <label for="about">About</label>
+    <input type="text" id="about" name="about" value="{{ request.POST.about }}">
+
+    <!-- Profile Photo -->
+    <label for="photo">Photo</label>
+    <input type="file" id="photo" name="photo">
+
+    <button type="submit">Submit</button>
+</form>
+
+{% if form.errors %}
+    <div style="color: red;">
+        <ul>
+            {% for field, errors in form.errors.items %}
+                <li>{{ field }}: {{ errors }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+{% endblock %}
